@@ -1,54 +1,58 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 /**
- * Root state object. 
+ * Root state object.
  * Each Vuex instance is just a single state tree.
  */
 const state = {
-  sent: false,
+  sent: true,
+  first: true,
   forms: []
-}
+};
 
 const mutations = {
+  firstFormSent(state) {
+    state.first = false;
+  },
   formSent(state) {
-    state.sent = true
+    state.sent = true;
   },
   sendForm(state, form) {
-    state.forms.push(form)
+    state.forms.push(form);
   },
   addNewEntry(state) {
-    state.sent = false
+    state.sent = false;
   }
-}
+};
 
 /**
- * a ctions are functions that cause side effects and 
- * can involve asynchronous  operations. 
+ * a ctions are functions that cause side effects and
+ * can involve asynchronous  operations.
  */
 const actions = {
   sendForm: ({ commit }, form) => {
     /**
      * Commit the formData to state and signal the app that the form was sent
      */
-    commit('sendForm', form)
-    commit('formSent')
+    commit("sendForm", form);
+    commit("formSent");
   },
   /**
-   * Add a new form entry. 
+   * Add a new form entry.
    * The form should be then reset to empty.
    */
-  addNewEntry: ({ commit }) => commit('addNewEntry')
-}
+  addNewEntry: ({ commit }) => commit("addNewEntry")
+};
 
 /**
- * A Vuex instance is created by combining the state, 
+ * A Vuex instance is created by combining the state,
  * mutations, actions, and getters.
  */
 export default new Vuex.Store({
   state,
   actions,
   mutations
-})
+});
